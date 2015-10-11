@@ -1,11 +1,11 @@
 package com.cisc181.core;
-import java.util.Date;
+import java.util.Calendar;
 
 public class Employee extends Person{
 
     private String office;
     private double salary;
-    private Date hire;
+    private Calendar hire;
 
     /**
      * Employee no-arg constructor
@@ -28,9 +28,9 @@ public class Employee extends Person{
      * @param hire
      * @throws PersonException 
      */
-    public Employee(String FirstName, String MiddleName, String LastName,Date DOB,
+    public Employee(String FirstName, String MiddleName, String LastName, Calendar DOB,
 			String Address, String Phone_number, String Email,
-			String office, double salary, Date hire) throws PersonException
+			String office, double salary, Calendar hire) throws PersonException
     {
     	super(FirstName, MiddleName, LastName, DOB, Address, Phone_number, Email);
         this.office = office;
@@ -70,11 +70,11 @@ public class Employee extends Person{
     /**
      * Set the Hire Date
      */
-    public void setHire(Date hire){
+    public void setHire(Calendar hire){
         this.hire = hire;
     }
 
-    public Date getHire(){
+    public Calendar getHire(){
         return this.hire;
     }
 

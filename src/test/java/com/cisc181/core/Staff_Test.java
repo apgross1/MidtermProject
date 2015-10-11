@@ -3,6 +3,7 @@ package com.cisc181.core;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.After;
@@ -31,6 +32,9 @@ public class Staff_Test {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+	 * Test to see if average salary of a list of staff members is computed correctly.
+	 */
 	@Test
 	public void salaryTest() {
 		ArrayList<Staff> staff_list = new ArrayList<Staff>();
@@ -60,52 +64,56 @@ public class Staff_Test {
 			
 	}
 	
+	/**
+	 * Checks to see if PersonException is called with an invalid date of birth
+	 * @throws PersonException
+	 */
 	@Test
 	public void exceptionTestDOB() throws PersonException { 
-		//Invalid date of birth
-		Date dateOfBirth = new Date();
-		//Deprecated...should we use Calendar?
-		dateOfBirth.setDate(15);
-		dateOfBirth.setMonth(2);
-		dateOfBirth.setYear(1914);
-		Date hireDate = new Date();
-		hireDate.setDate(25);
-		hireDate.setMonth(7);
-		hireDate.setYear(2003);
+		boolean catchException = false;
 		try{
-			Staff staff = new Staff("Joseph", "Brian", "Smith", dateOfBirth,
+			//Invalid date of birth
+			Calendar DOB = Calendar.getInstance();
+			DOB.set(1914, 2, 15);
+			Calendar hireDate = Calendar.getInstance();
+			hireDate.set(2003, 25, 7);
+			Staff staff = new Staff("Joseph", "Brian", "Smith", DOB,
 					"109 Willow Rd", "(302)-967-3902", "jspe@udel.edu", 
 					"2:00PM to 3:00PM", 23, 45000.00, hireDate, eTitle.MAINTENANCE_HEAD);
 		}catch(PersonException p) {
 			System.out.println("PersonExcepton was thrown");
+			catchException = true;
 		}
 		finally{
 			System.out.println("Birth date error test complete");
 		}
-		
+		assertTrue("Didn't catch the exception", catchException == true);
 	}
 	
+	/**
+	 * Tests to see if PersonException is called with an invalid phone number
+	 * @throws PersonException
+	 */
 	@Test
 	public void exceptionTestPhoneNum() throws PersonException {
-		//Invalid phone number format
-		Date dateOfBirth = new Date();
-		//Deprecated...should we use Calendar?
-		dateOfBirth.setDate(15);
-		dateOfBirth.setMonth(2);
-		dateOfBirth.setYear(1956);
-		Date hireDate = new Date();
-		hireDate.setDate(25);
-		hireDate.setMonth(7);
-		hireDate.setYear(2003);
+		boolean catchException = false;
 		try{
-			Staff staff = new Staff("Joseph", "Brian", "Smith", dateOfBirth,
-					"109 Willow Rd", "11-22-333", "jspe@udel.edu", 
+			//Invalid phone number format
+			Calendar DOB = Calendar.getInstance();
+			DOB.set(1954, 2, 15);
+			Calendar hireDate = Calendar.getInstance();
+			hireDate.set(2003, 25, 7);
+			Staff staff = new Staff("Joseph", "Brian", "Smith", DOB,
+					"109 Willow Rd", "293-333-3", "jspe@udel.edu", 
 					"2:00PM to 3:00PM", 23, 45000.00, hireDate, eTitle.MAINTENANCE_HEAD);
 		}catch(PersonException p) {
+			catchException = true;
 			System.out.println("PersonExcepton was thrown");
+			
 		}
 		finally{
 			System.out.println("Phone number error test complete");
 		}
+		assertTrue("Did not catch exception", catchException == true);
 	}
 }

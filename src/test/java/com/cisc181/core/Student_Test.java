@@ -3,7 +3,7 @@ package com.cisc181.core;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.UUID;
 
 import org.junit.After;
@@ -20,21 +20,18 @@ public class Student_Test {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-
+		
+		//Creating 2 semesters
 		Semester fall = new Semester();
 		Semester spring = new Semester();
 		ArrayList<Semester> semesterList = new ArrayList<Semester>();
 		semesterList.add(fall);
 		semesterList.add(spring);
-
+		
+		//Creating a list of students
 		ArrayList<Student> studentList = new ArrayList<Student>();
-		// HAVE TO CREATE FULL INSTANCE OF STUDENT? OR CAN WE USE
-		// A NO-ARGS CONSTRUCTOR?
-		Date dob = new Date();
-		dob.setDate(12);
-		dob.setMonth(3);
-		dob.setYear(1996);
-
+		Calendar dob = Calendar.getInstance();
+		dob.set(1996, 3, 12);
 		Student student1 = new Student("John", "S.", "Smith", dob, eMajor.BUSINESS, "129 Marble Dr.", "(302)-888-9834",
 				"jsmith@udel.edu");
 		studentList.add(student1);
@@ -68,6 +65,7 @@ public class Student_Test {
 		studentlist = studentList;
 		semesterlist = semesterList;
 
+		//Adding 3 courses to each semester
 		for (Semester s : semesterlist) {
 			Course course1 = new Course("BIO-122", 20, eMajor.NURSING);
 			Course course2 = new Course("CHEM-225", 40, eMajor.CHEM);
@@ -77,6 +75,7 @@ public class Student_Test {
 			s.setCourse(course3);
 		}
 
+	//Adding 2 sections to each course
 	int i = 0;
 	while(i<2) {
 		for (Course c : semesterlist.get(i).getCourse()) {
@@ -91,6 +90,7 @@ public class Student_Test {
 			c.setSection(section1);
 			c.setSection(section2);
 			
+			//Adding list of students to each section
 			for (Section sec: c.getSection()) {
 				for (Student stu : studentlist) {
 					Enrollment enrollment = new Enrollment(stu.getStudentID(), sec.getSectionID(), c.getCourseID());
@@ -117,6 +117,10 @@ public class Student_Test {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+	 * Tests if there are 10 students in each section and each section contains instances of Student
+	 * @throws Exception
+	 */
 	@Test
 	public void enrollStudents() throws Exception {
 		// Test to see if each section has 10 students enrolled.
@@ -167,6 +171,10 @@ public class Student_Test {
 		
 	}
 	
+	/**
+	 * Test to calculate GPA for each of the 10 students
+	 * @throws Exception
+	 */
 	@Test
 	public void gpaTest() throws Exception {
 		for (Student stu : studentlist) {
@@ -188,6 +196,10 @@ public class Student_Test {
 		}
 	}
 	
+	/**
+	 * Test to calculate the average grade per course per semester
+	 * @throws Exception
+	 */
 	@Test
 	public void averageGradeTest() throws Exception {
 		for (Semester s : semesterlist) {
@@ -216,6 +228,10 @@ public class Student_Test {
 		}
 	}
 	
+	/**
+	 * Test to change the major of a student
+	 * @throws Exception
+	 */
 	@Test
 	public void changeMajor() throws Exception {
 		System.out.println("Intital major: " + studentlist.get(0).getMajor());
